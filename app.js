@@ -208,7 +208,6 @@ app.get("/agenda/", async (request, response) => {
 
   const checkDate = parse(date, "yyyy-MM-dd", new Date());
   const result = isValid(checkDate);
-  console.log(result);
 
   if (isValid(checkDate) === true) {
     const formattedDate = format(new Date(year, month, day), "yyyy-MM-dd");
@@ -240,7 +239,6 @@ app.post("/todos/", async (request, response) => {
   let month = date[1] - 1;
   let day = date[2];
   const checkDate = parse(dueDate, "yyyy-MM-dd", new Date());
-  const formattedDate = format(new Date(year, month, day), "yyyy-MM-dd");
 
   if (priority !== "HIGH" && priority !== "MEDIUM" && priority !== "LOW") {
     response.status(400);
@@ -263,6 +261,7 @@ app.post("/todos/", async (request, response) => {
     response.status(400);
     response.send("Invalid Due Date");
   } else {
+    const formattedDate = format(new Date(year, month, day), "yyyy-MM-dd");
     const insertTodoQuery = `
       INSERT INTO todo (id,todo,priority,status,category,due_date)
       VALUES(${id},'${todo}','${priority}','${status}','${category}','${formattedDate}');`;
